@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.vivek.module5.exceptions.ResourceNotFoundException;
 import org.vivek.module5.repositories.UserRepository;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
