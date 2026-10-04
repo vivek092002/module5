@@ -1,10 +1,13 @@
 package org.vivek.module5.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.vivek.module5.dto.PostDTO;
 import org.vivek.module5.entity.PostEntity;
+import org.vivek.module5.entity.UserEntity;
 import org.vivek.module5.exceptions.ResourceNotFoundException;
 import org.vivek.module5.repositories.PostRepository;
 
@@ -13,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
@@ -35,6 +39,9 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDTO getPostById(Long postId) {
+
+        UserEntity userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info("user {}", userEntity);
         PostEntity postEntity = postRepository
                 .findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post not found with id "+postId));

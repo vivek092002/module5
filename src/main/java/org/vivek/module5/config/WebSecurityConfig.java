@@ -1,5 +1,6 @@
 package org.vivek.module5.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,11 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.vivek.module5.Filters.JwtAuthFilters;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
 
+
+    private final JwtAuthFilters jwtAuthFilters;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -27,12 +33,13 @@ public class WebSecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/posts", "/error", "/auth/**").permitAll()
-                        .requestMatchers("/posts/**").hasAnyRole("ADMIN ")
+//                        .requestMatchers("/posts/**").authenticated()
                         .anyRequest().authenticated())
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .sessionManagement(sessionConfig -> sessionConfig
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(Customizer.withDefaults());
+                .addFilterBefore(jwtAuthFilters, UsernamePasswordAuthenticationFilter.class);
+//                .formLogin(Customizer.withDefaults());
 
         return httpSecurity.build();
     }
@@ -59,9 +66,5 @@ public class WebSecurityConfig {
 //        return new InMemoryUserDetailsManager(normalUser, adminUser);
 //    }
 
-    //password encoder
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 }

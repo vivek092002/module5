@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
 @Data
-public class ApiError {
+public class   ApiError {
 
     private LocalDateTime timeStamp;
     private String error;
