@@ -2,6 +2,7 @@ package org.vivek.module5.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class UserEntity implements UserDetails{
 
     @Id
@@ -22,6 +24,7 @@ public class UserEntity implements UserDetails{
     @Column(unique = true)
     private String email;
     private String password;
+    private String name;
 
     public UserEntity(long l, String mail, String number) {
     }
