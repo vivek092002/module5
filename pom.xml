@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.vivek</groupId>
-    <artifactId>module5</artifactId>
+    <artifactId>module6</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>module5</name>
     <description>module5</description>

@@ -1,4 +1,4 @@
-package org.vivek.module5.config;
+package org.vivek.module6.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
